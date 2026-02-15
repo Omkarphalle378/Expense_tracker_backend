@@ -1,0 +1,33 @@
+CREATE DATABASE expense_tracker;
+USE expense_tracker;
+SET SQL_SAFE_UPDATES = 0;
+
+CREATE TABLE users(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(20) NOT NULL,
+    email VARCHAR(100)NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE expenses (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    description TEXT,
+    expense_date DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE
+);
+
+select* from users;
+TRUNCATE TABLE users;
+
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE expenses;
+TRUNCATE TABLE users;
+SET FOREIGN_KEY_CHECKS = 1;
